@@ -28,7 +28,7 @@ public class HashTest {
 
     @Test
     public void testGetData_returns_the_data_associated_with_given_key_when_the_key_is_string_and_data_is_int() throws Exception {
-        Hash<Integer,String> hash = new Hash<Integer,String>();
+        Hash<Integer, String> hash = new Hash<Integer, String>();
         Integer data = new Integer(439);
         String key = "Allah K Nam Pe De De Baba..";
         hash.put(data, key);
@@ -37,7 +37,7 @@ public class HashTest {
 
     @Test
     public void testGetData_returns_the_data_associated_with_given_key_when_the_key_is_integer_and_data_is_string() throws Exception {
-        Hash<String,Integer> hash = new Hash<String, Integer>();
+        Hash<String, Integer> hash = new Hash<String, Integer>();
         Integer key = new Integer(420);
         String data = "Uthalere baba..";
         hash.put(data, key);
