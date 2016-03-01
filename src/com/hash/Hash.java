@@ -1,32 +1,32 @@
 package com.hash;
 
-/**
- * Created by rahulna on 01/03/16.
- */
-public class Hash<V, K> {
-    private V[] table;
+public class Hash<K, V> {
+    @SuppressWarnings("unchecked")
+    private V[] table = (V[]) new Object[100000];
 
-    Hash() {
-        table = (V[]) new Object[100];
-    }
-
-    private int getIndex(K key) {
+    private int getHash(K key) {
         String keyString = key.toString();
-        int hashIndex = 0;
-        for (int index = 0; index < keyString.length(); index++)
-            hashIndex ^= keyString.charAt(index);
-        return hashIndex/keyString.length();
+        int finalHashIndex = 0;
+
+        int keyLenght = keyString.length();
+
+        for (int index = 0; index < keyLenght; index++) {
+            int currentChar = keyString.charAt(index);
+            finalHashIndex ^= (currentChar >> index);
+        }
+
+        return finalHashIndex;
     }
 
-    public boolean put(V value, K key) {
-        int index = getIndex(key);
+    public boolean put(K key, V value) {
+        int index = getHash(key);
         System.out.println(index);
         table[index] = value;
         return true;
     }
 
     public V getData(K key) {
-        int index = getIndex(key);
+        int index = getHash(key);
         return table[index];
     }
 }
