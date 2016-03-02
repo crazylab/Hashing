@@ -1,32 +1,38 @@
 package com.hash;
 
 public class Hash<K, V> {
-    @SuppressWarnings("unchecked")
-    private V[] table = (V[]) new Object[100000];
+    private Element[] table = new Element[100000];
 
-    private int getHash(K key) {
+    public int getHash(K key) {
         String keyString = key.toString();
         int finalHashIndex = 0;
 
         int keyLenght = keyString.length();
-
         for (int index = 0; index < keyLenght; index++) {
-            int currentChar = keyString.charAt(index);
-            finalHashIndex ^= (currentChar >> index);
+            finalHashIndex += keyString.charAt(index) * (index+1);
         }
 
         return finalHashIndex;
     }
 
-    public boolean put(K key, V value) {
-        int index = getHash(key);
-        System.out.println(index);
-        table[index] = value;
+    private boolean isColision(int index){
+        if(table[index] == null)
+            return false;
         return true;
     }
 
-    public V getData(K key) {
+    public boolean put(K key, V value) {
         int index = getHash(key);
-        return table[index];
+        if(isColision(index)) {
+            table[index].addNext(key, value);
+            return true;
+        }
+        table[index] = new Element<K, V>(key, value);
+        return true;
+    }
+
+    public Object getData(K key) throws Exception{
+        int index = getHash(key);
+        return table[index].getData(key);
     }
 }

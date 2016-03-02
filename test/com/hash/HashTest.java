@@ -3,6 +3,7 @@ package com.hash;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class HashTest {
@@ -35,10 +36,21 @@ public class HashTest {
     @Test
     public void testGetData_returns_the_data_associated_with_given_key_when_the_key_is_integer_and_data_is_string() throws Exception {
         Hash<Integer, String> hash = new Hash<>();
-        Integer key = 420;
+        int key = 420;
         String data = "Uthalere baba..";
         hash.put(key, data);
-        assertEquals(data, hash.getData(key));
+
+        key = 1;
+        data = "Xyz";
+        hash.put(key, data);
+
+        key = 2;
+        data = "pqr";
+        hash.put(key, data);
+
+        assertEquals("Xyz", hash.getData(1));
+        assertEquals("pqr", hash.getData(2));
+        assertEquals("Uthalere baba..", hash.getData(420));
     }
 
     @Test
@@ -68,5 +80,15 @@ public class HashTest {
         assertEquals("c for cat", hash.getData("cba"));
         assertEquals("boom", hash.getData("bca"));
         assertEquals("english", hash.getData("abc"));
+    }
+
+    @Test
+    public void testGetHash_generates_unique_hash_index_for_different_key_consistiong_of_same_char() throws Exception {
+        Hash<String, String> hash = new Hash<>();
+
+        int index1 = hash.getHash("abc");
+        int index2 = hash.getHash("bca");
+
+        assertNotEquals(index1, index2);
     }
 }
