@@ -2,9 +2,7 @@ package com.hash;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class HashTest {
 
@@ -90,5 +88,20 @@ public class HashTest {
         int index2 = hash.getHash("bca");
 
         assertNotEquals(index1, index2);
+    }
+
+    @Test
+    public void testGetData_replaces_the_data_when_same_key_is_given_2_times() throws Exception {
+        Hash< Integer, String > hash = new Hash<>();
+
+        hash.put(5, "abc");
+        hash.put(13, "cde");
+        hash.put(22, "def");
+        hash.put(13, "efg");
+
+        assertNotEquals("cde",hash.getData(13));
+        assertEquals("efg",hash.getData(13));
+        assertEquals("abc", hash.getData(5));
+        assertEquals("def", hash.getData(22));
     }
 }

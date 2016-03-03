@@ -22,16 +22,19 @@ public class Element<K, V> {
     }
 
     public void addNext(K key, V value){
+        if(hasSameKey(key)){
+            this.value = value;
+            return;
+        }
+
         if(next == null) {
-            next = new Element<K, V>(key, value);
+            next = new Element<>(key, value);
             return;
         }
         next.addNext(key, value);
     }
 
-    public Element<K, V> getNext(){
-        return next;
+    public boolean hasSameKey(K key) {
+        return key == this.key;
     }
-
-
 }
